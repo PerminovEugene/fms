@@ -1,2 +1,33 @@
 # FMS
 Simple fleet management system, based on nest.js, microservices, docker, postgres, kafka and redis
+
+## DEVELOP
+
+* Create an environment:
+  1. Create .env file by template
+    ```console
+    touch .env & cp .env.template .env
+    ```
+  2. Fill .env file in project root
+
+* Setup services
+  1. install docker (v20.10.5) and docker-compose (v1.28.6)
+  2. Run
+  ```console
+  docker-compose build
+  ```
+  3. Run
+  ```console 
+  docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  ```
+* DEBUG
+  1. If you are using M1 processor (as I am) by Apple, you can't use debugging inside docker container via vscode. Here is an open issue https://github.com/microsoft/vscode-remote-release/issues/4462.
+  As workaround you need launch all services via docker (except which you want to debug)
+   ```console 
+  docker-compose -f docker-compose.yml -f docker-compose.dev-general.yml -f NOT_DEBUGGING_SERVICE_COMPOSE_FILE_1 up -d
+  ```
+  TODO add scripts-aliases
+  
+  And after that launch service in your vscode with usual debug (it requires you to install node.js on your pc)
+
+  2. If you are not using m1 processor - just launch all services via docker-compose, install VSCode plugin remote-containers and debug
