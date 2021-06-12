@@ -17,7 +17,7 @@ export class DriverController {
   constructor(private readonly driverService: DriverService) {}
 
   @Post()
-  create(@Body() createDriverDto: CreateDriverDto): Driver {
+  create(@Body() createDriverDto: CreateDriverDto): Promise<Driver> {
     return this.driverService.createDriver(createDriverDto);
   }
 
@@ -27,20 +27,20 @@ export class DriverController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Driver {
-    return this.driverService.getDriver(id);
+  async findOne(@Param('id') id: string): Promise<Driver> {
+    return this.driverService.getDriver(parseInt(id));
   }
 
   @Put(':id')
   update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateDriverDto: UpdateDriverDto,
-  ): Driver {
-    return this.driverService.updateDriver(id, updateDriverDto);
+  ): Promise<Driver> {
+    return this.driverService.updateDriver(parseInt(id), updateDriverDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.driverService.removeDriver(id);
+  remove(@Param('id') id: string): Promise<void> {
+    return this.driverService.removeDriver(parseInt(id));
   }
 }

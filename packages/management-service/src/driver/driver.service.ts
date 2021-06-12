@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../general/database/prisma.service';
 import {
   Pagination,
   PaginationQuery,
-} from 'src/general/pagination/pagination.dto';
+} from '../general/pagination/pagination.dto';
 import { Driver, CreateDriverDto, UpdateDriverDto } from './driver.dto';
 
 @Injectable()
 export class DriverService {
-  getDriver(id: number): Driver {
-    return { id: 1, status: 'available' };
+  constructor(private readonly prisma: PrismaService) {}
+
+  getDriver(id: number): Promise<Driver> {
+    return this.prisma.driver.findUnique({ where: { id } });
   }
 
   getDrivers(paginationQuery: PaginationQuery): Pagination<Driver> {
@@ -20,15 +23,22 @@ export class DriverService {
     };
   }
 
-  createDriver(createDriverDto: CreateDriverDto): Driver {
-    return { id: 1, status: 'available' };
+  createDriver(createDriverDto: CreateDriverDto): Promise<Driver> {
+    return this.prisma.driver.create({
+      data: createDriverDto,
+    });
   }
 
-  updateDriver(id: number, updateDriverDto: UpdateDriverDto): Driver {
-    return { id: 1, status: 'available' };
+  updateDriver(id: number, updateDriverDto: UpdateDriverDto): Promise<Driver> {
+    return this.prisma.driver.update({
+      where: { id },
+      data: updateDriverDto,
+    });
   }
 
-  removeDriver(id: number) {
-    return;
+  async removeDriver(id: number) {
+    await this.prisma.driver.delete({
+      where: { id },
+    });
   }
 }

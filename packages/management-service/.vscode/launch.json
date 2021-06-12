@@ -16,10 +16,24 @@
             "run-script", "start:dev"
         ],
         "sourceMaps": true,
-        "envFile": "${workspaceFolder}/../../.env",
+        "envFile": "${workspaceFolder}/.env",
         "cwd": "${workspaceRoot}",
         "console": "integratedTerminal",
         "protocol": "inspector"
-    }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Management service",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script", "test:e2e"
+      ],
+      "sourceMaps": true,
+      "envFile": "${workspaceFolder}/.e2e_test.env",
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "protocol": "inspector"
+  }
 ]
 }
