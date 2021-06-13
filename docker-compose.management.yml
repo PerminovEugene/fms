@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  management_service:
+    env_file:
+      - ./packages/management-service/.env
+    build: 
+      dockerfile: ./Dockerfile
+      context: ./packages/management-service
+    ports:
+      - "3000:3000"
+    links:
+      - postgresql
+    depends_on: 
+      - postgresql
+    volumes:
+      - ./packages/management-service:/usr/src/app
+      

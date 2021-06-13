@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  postgresql:
+    env_file:
+      - ./packages/management-service/.env
+    image:  postgres:13.3

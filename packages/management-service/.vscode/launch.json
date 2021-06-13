@@ -1,0 +1,39 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Management service",
+        "args": [
+            "${workspaceFolder}/src/main.ts"
+        ],
+        "runtimeExecutable": "npm",
+        "runtimeArgs": [
+            "run-script", "start:dev"
+        ],
+        "sourceMaps": true,
+        "envFile": "${workspaceFolder}/.env",
+        "cwd": "${workspaceRoot}",
+        "console": "integratedTerminal",
+        "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Management service",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script", "test:e2e"
+      ],
+      "sourceMaps": true,
+      "envFile": "${workspaceFolder}/.e2e_test.env",
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "protocol": "inspector"
+  }
+]
+}
