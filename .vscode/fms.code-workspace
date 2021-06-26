@@ -8,6 +8,10 @@
       "name": "packages/management",
       "path": "../packages/management-service"
     },
+    {
+      "name": "packages/car",
+      "path": "../packages/car-service"
+    },
   ],
   "settings": {
     "files.exclude": {
