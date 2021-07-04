@@ -4,7 +4,7 @@ import { TrackerModule } from '../tracker/tracker.module';
 import { ScheduleService } from './schedule.service';
 
 @Module({
-  imports: [TrackerModule],
-  providers: [ScheduleService, TrackerController],
+  imports: [TrackerModule, TrackerController],
+  providers: [ScheduleService],
 })
 export class ScheduleModule {}

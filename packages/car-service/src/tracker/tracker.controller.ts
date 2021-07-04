@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { Payload, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
+import { KafkaService } from 'src/kafka/kafka.service';
 
 interface CarTrackingMessage {
   id: number;
@@ -9,6 +10,8 @@ interface CarTrackingMessage {
 
 @Controller('tracker')
 export class TrackerController {
+  constructor(private readonly kafkaService: KafkaService) {}
+
   @MessagePattern('car.track')
   // track(@Payload() message: CarTrackingMessage): any {
   public track(): any {
@@ -21,12 +24,11 @@ export class TrackerController {
       { longitude, latitude },
     ];
 
-    return {
-      headers: {
-        realm,
-      },
-      key,
-      value: items,
-    };
+    this.kafkaService.sendMessage('paterno', {
+      messageId: '' + new Date().valueOf(),
+      body: { value: 'hey swagiti swag' },
+      messageType: 'Say.Hello',
+      topicName: 'hello.topic',
+    });
   }
 }

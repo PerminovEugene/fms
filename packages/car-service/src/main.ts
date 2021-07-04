@@ -5,14 +5,18 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
-    {
-      transport: Transport.KAFKA,
-      options: {
-        client: {
-          brokers: ['localhost:29092'],
-        },
-      },
-    },
+    // {
+    //   name: 'HERO_SERVICE',
+    //   transport: Transport.KAFKA,
+    //   options: {
+    //     client: {
+    //       brokers: ['localhost:29092'],
+    //     },
+    //     consumer: {
+    //       groupId: 'hero-consumer',
+    //     },
+    //   },
+    // },
   );
   // await app.startAllMicroservicesAsync();
   await app.listenAsync();
