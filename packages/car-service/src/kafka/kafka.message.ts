@@ -5,7 +5,7 @@ export class KafkaPayload {
   public topicName: string;
   public createdTime?: string;
 
-  create?(messageId, body, messageType, topicName): KafkaPayload {
+  public create?(messageId, body, messageType, topicName): KafkaPayload {
     return {
       messageId,
       body,
