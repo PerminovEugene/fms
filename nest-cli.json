@@ -1,0 +1,29 @@
+{
+  "monorepo": true,
+  "root": "apps/root",
+  "sourceRoot": "apps/root/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/root/tsconfig.app.json"
+  },
+  "projects": {
+    "root": {
+      "type": "application",
+      "root": "apps/root",
+      "entryFile": "main",
+      "sourceRoot": "apps/root/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/root/tsconfig.app.json"
+      }
+    },
+    "car-service": {
+      "type": "application",
+      "root": "apps/car-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/car-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/car-service/tsconfig.app.json"
+      }
+    }
+  }
+}
