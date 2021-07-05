@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
-import { KafkaService } from 'src/kafka/kafka.service';
+import { KafkaService } from '@fms/microservice-core';
 import { TrackerService } from './tracker.service';
 
-interface CarTrackingMessage {
-  id: number;
-  latitude: number;
-  longitude: number;
-}
+// interface CarTrackingMessage {
+//   id: number;
+//   latitude: number;
+//   longitude: number;
+// }
 
 @Controller('tracker')
 export class TrackerController {

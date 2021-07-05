@@ -1,21 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { TrackerModule } from './tracker/tracker.module';
-import { ScheduleModule } from '@nestjs/schedule';
-import { ScheduleModule as TaskModule } from './schedule/schedule.module';
+import { AppService } from './app.service';
 import { KafkaModule } from '@fms/microservice-core';
+import { ConsumerModule } from './consumer/consumer.module';
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
-    TaskModule,
     KafkaModule.register({
       clientId: 'test-app-client',
       brokers: ['0.0.0.0:29092'],
       groupId: 'test-app-group',
     }),
-    TrackerModule,
+    ConsumerModule,
   ],
   controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

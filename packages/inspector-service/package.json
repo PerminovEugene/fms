@@ -1,5 +1,5 @@
 {
-  "name": "car-service",
+  "name": "inspector",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -23,11 +23,8 @@
   "dependencies": {
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
-    "@nestjs/microservices": "^7.6.18",
     "@nestjs/platform-express": "^7.6.15",
-    "@nestjs/schedule": "^0.4.3",
-    "kafkajs": "^1.15.0",
-    "reflect-metadata": "^0.1.1kafkajs3",
+    "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "@fms/microservice-core": "0.0.1"
@@ -36,7 +33,6 @@
     "@nestjs/cli": "^7.6.0",
     "@nestjs/schematics": "^7.3.0",
     "@nestjs/testing": "^7.6.15",
-    "@types/cron": "^1.7.2",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.36",

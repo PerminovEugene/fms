@@ -12,11 +12,19 @@
       "name": "packages/car",
       "path": "../packages/car-service"
     },
+    {
+      "name": "packages/inspector",
+      "path": "../packages/inspector-service"
+    },
+    {
+      "name": "packages/microservice-core",
+      "path": "../packages/microservice-core"
+    },
   ],
   "settings": {
     "files.exclude": {
       "node_modules/": true,
-      "packages/": true
+      "packages": true
     },
   }
 }

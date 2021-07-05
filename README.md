@@ -3,6 +3,18 @@ Simple fleet management system, based on nest.js, microservices, docker, postgre
 
 ## DEVELOP
 
+How to install dependencies and build all packages locally:
+
+1. npm i lerna -g
+
+2. npm lerna bootstrap --hoist
+
+3. npm run build
+
+After that microservice-core package is linked to other packages
+
+### Management service
+
 * Create an environment:
   0. Go to ./packages/management
   1. Create .env file by template
