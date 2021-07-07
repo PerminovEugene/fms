@@ -1,0 +1,4 @@
+model Driver {
+  id     Int     @default(autoincrement()) @id
+  status String
+}

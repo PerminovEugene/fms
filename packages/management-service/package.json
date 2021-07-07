@@ -19,7 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "pretest:e2e": "node ./node_modules/@prisma/migrate/dist/bin.js reset --force",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:migrate": "prisma migrate dev --name",
+    "prisma:merge": "prisma-merge -b ./prisma/base.prisma -o ./prisma/schema.prisma"
   },
   "dependencies": {
     "@nestjs/cli": "^7.6.0",
@@ -30,6 +32,7 @@
     "@prisma/client": "^2.24.1",
     "kafkajs": "^1.15.0",
     "pg": "^8.6.0",
+    "prisma-merge": "^0.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6"
