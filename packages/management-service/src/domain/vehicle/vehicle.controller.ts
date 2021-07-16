@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { VehicleService } from './vehicle.service';
 import { Vehicle, CreateVehicleDto, UpdateVehicleDto } from './vehicle.dto';
-import { PaginationQuery } from 'src/general/pagination/pagination.dto';
+import { PaginationQuery } from 'src/framework/pagination/pagination.utils';
 
 @Controller('vehicle')
 export class VehicleController {
@@ -22,8 +22,8 @@ export class VehicleController {
   }
 
   @Get()
-  findAll(@Query() { pageNumber, pageSize }: PaginationQuery) {
-    return this.vehicleService.getVehicles({ pageNumber, pageSize });
+  findAll(@Query() { pageNumber, pageSize, order }: PaginationQuery) {
+    return this.vehicleService.getVehicles({ pageNumber, pageSize, order });
   }
 
   @Get(':id')

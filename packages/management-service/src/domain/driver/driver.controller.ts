@@ -7,10 +7,11 @@ import {
   Put,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { DriverService } from './driver.service';
 import { Driver, CreateDriverDto, UpdateDriverDto } from './driver.dto';
-import { PaginationQuery } from 'src/general/pagination/pagination.dto';
+import { Order } from '../../framework/pagination/pagination.utils';
 
 @Controller('drivers')
 export class DriverController {
@@ -22,8 +23,12 @@ export class DriverController {
   }
 
   @Get()
-  findAll(@Query() { pageNumber, pageSize }: PaginationQuery) {
-    return this.driverService.getDrivers({ pageNumber, pageSize });
+  findAll(
+    @Query('pageNumber', ParseIntPipe) pageNumber: number,
+    @Query('pageSize', ParseIntPipe) pageSize: number,
+    @Query('order') order: Order, // Add custom pipe
+  ) {
+    return this.driverService.getDrivers({ pageNumber, pageSize, order });
   }
 
   @Get(':id')

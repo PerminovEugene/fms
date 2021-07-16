@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../general/database/prisma.service';
+import { PrismaService } from '../../framework/database/prisma.service';
 import {
+  getPaginationCondition,
+  Order,
   Pagination,
   PaginationQuery,
-} from '../general/pagination/pagination.dto';
+} from '../../framework/pagination/pagination.utils';
 import { Vehicle, CreateVehicleDto, UpdateVehicleDto } from './vehicle.dto';
 
 @Injectable()
@@ -14,12 +16,16 @@ export class VehicleService {
     return this.prisma.vehicle.findUnique({ where: { id } });
   }
 
-  getVehicles(paginationQuery: PaginationQuery): Pagination<Vehicle> {
+  public async getVehicles(
+    paginationQuery: PaginationQuery,
+  ): Promise<Pagination<Vehicle>> {
+    const records = await this.prisma.vehicle.findMany({
+      ...getPaginationCondition(paginationQuery),
+    });
     return {
-      items: [],
-      pageNumber: 0,
-      pageSize: 10,
-      lastPageNumber: 0,
+      items: records,
+      ...paginationQuery,
+      lastPageNumber: 1, // TODO make real number
     };
   }
 

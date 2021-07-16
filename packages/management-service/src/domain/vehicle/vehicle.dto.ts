@@ -1,4 +1,4 @@
-import { Model } from '../general/database/database.dto';
+import { Model } from '../../framework/database/database.dto';
 
 export type Vehicle = Model & CreateVehicleDto;
 

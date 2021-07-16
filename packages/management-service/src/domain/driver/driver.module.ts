@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from '../general/database/prisma.module';
+import { PrismaModule } from '../../framework/database/prisma.module';
 import { DriverController } from './driver.controller';
 import { DriverService } from './driver.service';
 

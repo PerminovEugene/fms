@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../general/database/prisma.service';
+import { PrismaService } from '../../framework/database/prisma.service';
 import {
   Pagination,
   PaginationQuery,
-} from '../general/pagination/pagination.dto';
+  getPaginationCondition,
+} from '../../framework/pagination/pagination.utils';
 import { Driver, CreateDriverDto, UpdateDriverDto } from './driver.dto';
 
 @Injectable()
@@ -14,22 +15,29 @@ export class DriverService {
     return this.prisma.driver.findUnique({ where: { id } });
   }
 
-  getDrivers(paginationQuery: PaginationQuery): Pagination<Driver> {
+  public async getDrivers(
+    paginationQuery: PaginationQuery,
+  ): Promise<Pagination<Driver>> {
+    const records = await this.prisma.driver.findMany({
+      ...getPaginationCondition(paginationQuery),
+    });
     return {
-      items: [],
-      pageNumber: 0,
-      pageSize: 10,
-      lastPageNumber: 0,
+      items: records,
+      ...paginationQuery,
+      lastPageNumber: 1, // TODO make real number
     };
   }
 
-  createDriver(createDriverDto: CreateDriverDto): Promise<Driver> {
+  public createDriver(createDriverDto: CreateDriverDto): Promise<Driver> {
     return this.prisma.driver.create({
       data: createDriverDto,
     });
   }
 
-  updateDriver(id: number, updateDriverDto: UpdateDriverDto): Promise<Driver> {
+  public updateDriver(
+    id: number,
+    updateDriverDto: UpdateDriverDto,
+  ): Promise<Driver> {
     return this.prisma.driver.update({
       where: { id },
       data: updateDriverDto,

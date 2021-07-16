@@ -2,7 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { PrismaService } from '../src/general/database/prisma.service';
+import { PrismaService } from '../src/framework/database/prisma.service';
+import { Order } from '../src/framework/pagination/pagination.utils';
 
 describe('DriverController (e2e)', () => {
   let app: INestApplication;
@@ -19,12 +20,21 @@ describe('DriverController (e2e)', () => {
   });
 
   it('/drivers (GET) when 0 drivers in db', () => {
-    return request(app.getHttpServer()).get('/drivers').expect(200).expect({
-      items: [],
-      pageNumber: 0,
-      pageSize: 10,
-      lastPageNumber: 0,
-    });
+    return request(app.getHttpServer())
+      .get('/drivers')
+      .query({
+        pageNumber: 0,
+        pageSize: 10,
+        order: Order.ASC,
+      })
+      .expect(200)
+      .expect({
+        items: [],
+        pageNumber: 0,
+        pageSize: 10,
+        lastPageNumber: 1,
+        order: Order.ASC,
+      });
   });
 
   it('/drivers/:id (GET)', async () => {
@@ -39,6 +49,40 @@ describe('DriverController (e2e)', () => {
         id: id,
         status: 'active',
       });
+  });
+
+  it('/drivers (GET)', async () => {
+    await prisma.driver.createMany({
+      data: [
+        {
+          status: 'active',
+        },
+        {
+          status: 'active',
+        },
+        {
+          status: 'active',
+        },
+        {
+          status: 'active',
+        },
+      ],
+    });
+
+    const pageSize = 3;
+    const pageNumber = 1;
+    const { body } = await request(app.getHttpServer())
+      .get(`/drivers`)
+      .query({
+        pageNumber,
+        pageSize,
+        order: Order.ASC,
+      })
+      .expect(200);
+
+    expect(body.items.length).toEqual(2);
+    expect(body.pageSize).toEqual(pageSize);
+    expect(body.pageNumber).toEqual(pageNumber);
   });
 
   it('/drivers (POST)', () => {
