@@ -15,6 +15,8 @@ How to install dependencies and build all packages locally:
 
 After that microservice-core package is linked to other packages
 
+4. 
+
 ### Management service
 
 * Create an environment:
@@ -57,7 +59,7 @@ If you want to start e2e tests for management package:
     touch .e2e_test.env & cp .env.template .e2e_test.env
     ```
   2. Fill .e2e_test.env file
-  3. Run test databases
+  3. Run test databases from root
   ```console 
   docker-compose -f ./docker-compose.test.yml up -d
   ```

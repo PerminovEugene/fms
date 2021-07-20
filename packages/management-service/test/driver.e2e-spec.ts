@@ -32,7 +32,7 @@ describe('DriverController (e2e)', () => {
         items: [],
         pageNumber: 0,
         pageSize: 10,
-        lastPageNumber: 1,
+        lastPageNumber: 0,
         order: Order.ASC,
       });
   });

@@ -4,6 +4,7 @@ import {
   Pagination,
   PaginationQuery,
   getPaginationCondition,
+  countLastPageNumber,
 } from '../../framework/pagination/pagination.utils';
 import { Driver, CreateDriverDto, UpdateDriverDto } from './driver.dto';
 
@@ -18,13 +19,18 @@ export class DriverService {
   public async getDrivers(
     paginationQuery: PaginationQuery,
   ): Promise<Pagination<Driver>> {
-    const records = await this.prisma.driver.findMany({
-      ...getPaginationCondition(paginationQuery),
-    });
+    const count = await this.prisma.driver.count();
+    const lastPageNumber = countLastPageNumber(count, paginationQuery.pageSize);
+    const records =
+      lastPageNumber < paginationQuery.pageNumber
+        ? []
+        : await this.prisma.driver.findMany(
+            getPaginationCondition(paginationQuery),
+          );
     return {
       items: records,
       ...paginationQuery,
-      lastPageNumber: 1, // TODO make real number
+      lastPageNumber,
     };
   }
 

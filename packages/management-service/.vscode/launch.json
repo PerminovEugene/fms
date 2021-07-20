@@ -20,11 +20,22 @@
         "cwd": "${workspaceRoot}",
         "console": "integratedTerminal",
         "protocol": "inspector"
-    },
-    {
+    }, {
       "type": "node",
       "request": "launch",
-      "name": "Test Management service",
+      "name": "Unit Test Management service",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script", "test"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "protocol": "inspector"
+    }, {
+      "type": "node",
+      "request": "launch",
+      "name": "E2E Management service",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run-script", "test:e2e"
@@ -34,6 +45,6 @@
       "cwd": "${workspaceRoot}",
       "console": "integratedTerminal",
       "protocol": "inspector"
-  }
-]
+    }
+  ]
 }

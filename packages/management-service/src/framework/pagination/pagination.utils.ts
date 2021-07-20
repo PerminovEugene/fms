@@ -1,5 +1,4 @@
 import { Model } from '../database/database.dto';
-import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
 
 export type Pagination<T extends Model> = {
   items: T[];
@@ -25,3 +24,8 @@ export const getPaginationCondition = (paginationQuery: PaginationQuery) => ({
   skip: paginationQuery.pageNumber * paginationQuery.pageSize,
   orderBy: { id: paginationQuery.order },
 });
+
+// Pagination starts from 0
+export const countLastPageNumber = (count: number, pageSize: number) => {
+  return Math.abs(Math.trunc((count - 1) / pageSize));
+};
