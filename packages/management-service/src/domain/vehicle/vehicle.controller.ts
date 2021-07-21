@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { VehicleService } from './vehicle.service';
 import { Vehicle, CreateVehicleDto, UpdateVehicleDto } from './vehicle.dto';
-import { PaginationQuery } from 'src/framework/pagination/pagination.utils';
+import { PaginationQuery } from '../../framework/pagination/pagination.utils';
 
 @Controller('vehicle')
 export class VehicleController {

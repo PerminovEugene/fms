@@ -14,11 +14,28 @@ generator client {
 
 
 model Driver {
-  id     Int     @default(autoincrement()) @id
-  status String
+  id              Int     @default(autoincrement()) @id
+  mechanicalSkill Boolean @default(false)
+  expirienceYears Int
+  trip            Trip[]
+}
+
+model Trip {
+  id        Int     @default(autoincrement()) @id
+
+  driverId  Int  
+  driver    Driver  @relation(fields: [driverId], references: [id])
+  
+  vehicleId Int
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+
+  start     DateTime @db.Timestamp
+  end       DateTime @db.Timestamp
 }
 
 model Vehicle {
-  id     Int     @default(autoincrement()) @id
-  name String
+  id        Int      @default(autoincrement()) @id
+  name      String
+  model     String
+  trip      Trip[]
 }

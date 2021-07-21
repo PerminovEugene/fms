@@ -1,0 +1,12 @@
+model Trip {
+  id        Int     @default(autoincrement()) @id
+
+  driverId  Int  
+  driver    Driver  @relation(fields: [driverId], references: [id])
+  
+  vehicleId Int
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+
+  start     DateTime @db.Timestamp
+  end       DateTime @db.Timestamp
+}

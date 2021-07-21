@@ -4,6 +4,8 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/framework/database/prisma.service';
 import { Order } from '../src/framework/pagination/pagination.utils';
+import { buildDriverDto as buildDriverDto } from '../src/domain/driver/driver.factory';
+import { buildMany } from '../src/framework/factory/factory.utils';
 
 describe('DriverController (e2e)', () => {
   let app: INestApplication;
@@ -17,6 +19,10 @@ describe('DriverController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     prisma = app.get('PrismaService');
     await app.init();
+  });
+
+  afterEach(async () => {
+    await prisma.driver.deleteMany();
   });
 
   it('/drivers (GET) when 0 drivers in db', () => {
@@ -38,8 +44,9 @@ describe('DriverController (e2e)', () => {
   });
 
   it('/drivers/:id (GET)', async () => {
+    const driver = buildDriverDto();
     const { id } = await prisma.driver.create({
-      data: { status: 'active' },
+      data: driver,
     });
 
     return request(app.getHttpServer())
@@ -47,26 +54,14 @@ describe('DriverController (e2e)', () => {
       .expect(200)
       .expect({
         id: id,
-        status: 'active',
+        ...driver,
       });
   });
 
   it('/drivers (GET)', async () => {
+    const itemsCount = 5;
     await prisma.driver.createMany({
-      data: [
-        {
-          status: 'active',
-        },
-        {
-          status: 'active',
-        },
-        {
-          status: 'active',
-        },
-        {
-          status: 'active',
-        },
-      ],
+      data: buildMany(buildDriverDto, itemsCount),
     });
 
     const pageSize = 3;
@@ -80,52 +75,47 @@ describe('DriverController (e2e)', () => {
       })
       .expect(200);
 
-    expect(body.items.length).toEqual(2);
+    expect(body.items.length).toEqual(itemsCount - pageSize);
     expect(body.pageSize).toEqual(pageSize);
     expect(body.pageNumber).toEqual(pageNumber);
   });
 
   it('/drivers (POST)', () => {
+    const driver = buildDriverDto();
     return request(app.getHttpServer())
       .post('/drivers')
-      .send({
-        status: 'active',
-      })
+      .send(driver)
       .expect(201)
       .expect((res) => {
         expect(res.body).toEqual({
           id: expect.any(Number),
-          status: 'active',
+          ...driver,
         });
       });
   });
 
   it('/drivers (PUT)', async () => {
+    const driver = buildDriverDto();
     const { id } = await prisma.driver.create({
-      data: { status: 'banned' },
+      data: buildDriverDto(),
     });
 
     return request(app.getHttpServer())
       .put(`/drivers/${id}`)
-      .send({
-        status: 'active',
-      })
+      .send(driver)
       .expect(200)
       .expect({
         id,
-        status: 'active',
+        ...driver,
       });
   });
 
   it('/drivers/:id (DELETE)', async () => {
     const { id } = await prisma.driver.create({
-      data: { status: 'banned' },
+      data: buildDriverDto(),
     });
 
-    await request(app.getHttpServer())
-      .delete(`/drivers/${id}`)
-      .expect(200)
-      .expect({});
+    await request(app.getHttpServer()).delete(`/drivers/${id}`).expect(200);
 
     const driver = await prisma.driver.findFirst({ where: { id } });
     expect(driver).toBeNull();

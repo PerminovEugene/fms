@@ -1,4 +1,6 @@
 model Driver {
-  id     Int     @default(autoincrement()) @id
-  status String
+  id              Int     @default(autoincrement()) @id
+  mechanicalSkill Boolean @default(false)
+  expirienceYears Int
+  trip            Trip[]
 }
